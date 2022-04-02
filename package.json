@@ -1,0 +1,43 @@
+{
+	"name": "vio-md",
+	"version": "1.0.0",
+	"description": "Vio-MD is multi-device whatsapp bot using library @adiwajshing/baileys and example bot of Violetics API",
+	"main": "main.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node main.js",
+		"prettier": "prettier -w ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/violetics/vio-md.git"
+	},
+	"keywords": [
+		"violetics",
+		"multi-device",
+		"bot-whatsapp"
+	],
+	"author": "Violetics",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/violetics/vio-md/issues"
+	},
+	"homepage": "https://github.com/violetics/vio-md#readme",
+	"dependencies": {
+		"@adiwajshing/baileys": "^4.0.1",
+		"chalk": "^5.0.1",
+		"file-type": "^16.5.3",
+		"fluent-ffmpeg": "^2.1.2",
+		"node-fetch": "^2.6.1"
+	},
+	"devDependencies": {
+		"@hapi/boom": "^9.1.4",
+		"jimp": "^0.16.1",
+		"pino": "^7.9.2",
+		"prettier": "^2.6.1",
+		"qrcode-terminal": "^0.12.0"
+	}
+}

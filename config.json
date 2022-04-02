@@ -1,0 +1,22 @@
+{
+	"owner": ["62895333381439@s.whatsapp.net"],
+	"session": "creds.auth.json",
+	"ownername": "Violetics",
+	"namebot": "Vio-MD",
+	"ignore": {
+		"directory": ["umum"]
+	},
+	"response": {
+		"wait": "_Wait a minute, data is being processed!_",
+		"error": {
+			"invalidUrl": "Link yang kamu berikan tidak valid",
+			"api": "Maaf terjadi kesalahan"
+		},
+		"group": "Perintah ini hanya bisa digunakan di grup",
+		"private": "Perintah ini hanya bisa digunakan di private message",
+		"admin": "Perintah ini hanya bisa digunakan oleh Admin Grup",
+		"botAdmin": "Bot Harus menjadi admin",
+		"owner": "Perintah ini hanya dapat digunakan oleh owner bot",
+		"premium": "Perintah ini khusus member premium"
+	}
+}
