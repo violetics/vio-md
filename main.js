@@ -12,13 +12,13 @@ const utils = require("./utils");
 const { state, saveState } = useSingleFileAuthState(path.join(__dirname, `./${session}`), log({ level: "silent" }));
 attribute.prefix = prefix;
 
-const ReadFitur = () => {
-	let pathdir = path.join(__dirname, "./command");
-	let fitur = fs.readdirSync(pathdir);
-	fitur.forEach(async (res) => {
-		const commands = fs.readdirSync(`${pathdir}/${res}`).filter((file) => file.endsWith(".js"));
-		for (let file of commands) {
-			let command = require(`${pathdir}/${res}/${file}`);
+const readCommands = () => {
+	let pathDir = path.join(__dirname, "./commands");
+	let dirs = fs.readdirSync(pathDir);
+	dirs.forEach((dir) => {
+		const cmds = fs.readdirSync(`${pathDir}/${dir}`).filter((file) => file.endsWith(".js"));
+		for (let file of cmds) {
+			let command = require(`${pathDir}/${dir}/${file}`);
 			if (typeof command.run != "function") continue;
 			const cmdOptions = {
 				name: "command",
@@ -40,6 +40,7 @@ const ReadFitur = () => {
 				query: false,
 				isPrivate: false,
 				isUrl: false,
+				isSpam: false,
 				run: () => {},
 			};
 			if (command.options && typeof command == "object") command = { ...command, ...command.options };
