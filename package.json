@@ -35,6 +35,7 @@
 	},
 	"devDependencies": {
 		"@hapi/boom": "^9.1.4",
+		"bluebird": "^3.7.2",
 		"jimp": "^0.16.1",
 		"pino": "^7.9.2",
 		"prettier": "^2.6.1",
