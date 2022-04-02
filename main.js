@@ -1,6 +1,6 @@
 const { fetchLatestBaileysVersion, default: Baileys, useSingleFileAuthState, DisconnectReason } = require("@adiwajshing/baileys");
 const log = require("pino");
-const attribute = new Map();
+const Collection = new Map();
 const fs = require("fs");
 const path = require("path");
 const { Boom } = require("@hapi/boom");
@@ -10,15 +10,16 @@ const handler = require("./handler");
 const utils = require("./utils");
 
 const { state, saveState } = useSingleFileAuthState(path.join(__dirname, `./${session}`), log({ level: "silent" }));
-attribute.prefix = prefix;
+Collection.prefix = prefix;
 
 const readCommands = () => {
-	let pathDir = path.join(__dirname, "./commands");
+	let pathDir = path.join(__dirname, "/commands");
 	let dirs = fs.readdirSync(pathDir);
 	dirs.forEach((dir) => {
 		const cmds = fs.readdirSync(`${pathDir}/${dir}`).filter((file) => file.endsWith(".js"));
 		for (let file of cmds) {
 			let command = require(`${pathDir}/${dir}/${file}`);
+			if (!command) continue;
 			if (typeof command.run != "function") continue;
 			const cmdOptions = {
 				name: "command",
@@ -56,7 +57,7 @@ const readCommands = () => {
 				options: options,
 				run: cmd.run,
 			};
-			attribute.set(cmd.name, cmdObject);
+			Collection.set(cmd.name, cmdObject);
 		}
 	});
 	console.log(color("[INFO]", "yellow"), "command loaded!");
@@ -111,7 +112,7 @@ const connect = async () => {
 	});
 	// messages.upsert
 	conn.ev.on("messages.upsert", async (m) => {
-		handler(m, conn, attribute);
+		handler(m, conn, Collection);
 	});
 };
 connect();
