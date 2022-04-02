@@ -27,8 +27,8 @@
 	},
 	"homepage": "https://github.com/violetics/vio-md#readme",
 	"dependencies": {
-		"@adiwajshing/baileys": "^4.0.1",
-		"chalk": "^5.0.1",
+	    "@adiwajshing/baileys": "^4.0.1",
+		"chalk": "^4.1.2",
 		"file-type": "^16.5.3",
 		"fluent-ffmpeg": "^2.1.2",
 		"node-fetch": "^2.6.1"
