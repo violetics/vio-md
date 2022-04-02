@@ -62,7 +62,7 @@ const readCommands = () => {
 	console.log(color("[INFO]", "yellow"), "command loaded!");
 };
 // cmd
-ReadFitur();
+readCommands();
 
 const connect = async () => {
 	let { version, isLatest } = await fetchLatestBaileysVersion();
