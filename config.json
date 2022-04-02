@@ -2,6 +2,7 @@
 	"owner": ["62895333381439@s.whatsapp.net"],
 	"session": "creds.auth.json",
 	"name": "Vio-MD",
+	"prefix": "!",
 	"ignore": {
 		"directory": ["umum"]
 	},

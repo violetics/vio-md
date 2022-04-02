@@ -5,12 +5,12 @@ const fs = require("fs");
 const path = require("path");
 const { Boom } = require("@hapi/boom");
 const { color } = require("./lib");
-const { session } = require("./config.json");
+const { prefix, session } = require("./config.json");
 const handler = require("./handler");
 const utils = require("./utils");
 
 const { state, saveState } = useSingleFileAuthState(path.join(__dirname, `./${session}`), log({ level: "silent" }));
-attribute.prefix = "#";
+attribute.prefix = prefix;
 
 const ReadFitur = () => {
 	let pathdir = path.join(__dirname, "./command");

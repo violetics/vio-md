@@ -35,8 +35,7 @@ module.exports = handler = async (m, conn, commands) => {
 		if (msg.key && msg.key.remoteJid === "status@broadcast") return;
 		if (msg.type === "protocolMessage" || msg.type === "senderKeyDistributionMessage" || !msg.type || msg.type === "") return;
 
-		let { body, type } = msg;
-		const { isGroup, sender, from } = msg;
+		let { body, type, isGroup, sender, from } = msg;
 		const groupMetadata = isGroup ? await conn.groupMetadata(from) : "";
 		const groupName = isGroup ? groupMetadata.subject : "";
 		const isAdmin = isGroup ? (await getAdmin(conn, msg)).includes(sender) : false;
@@ -45,11 +44,7 @@ module.exports = handler = async (m, conn, commands) => {
 		const isOwner = owner.includes(sender);
 
 		let temp_pref = multi_pref.test(body) ? body.split("").shift() : "#";
-		if (body) {
-			body = body.startsWith(temp_pref) ? body : "";
-		} else {
-			body = "";
-		}
+		body = body ? (body.startsWith(temp_pref) ? body : "") : "";
 
 		const arg = body.substring(body.indexOf(" ") + 1);
 		const args = body.trim().split(/ +/).slice(1);
@@ -88,23 +83,11 @@ module.exports = handler = async (m, conn, commands) => {
 				if (isGroup) {
 					let timeLeft = (expiration - now) / 1000;
 					printSpam(isGroup, sender, groupName);
-					return await conn.sendMessage(
-						from,
-						{
-							text: `This group is on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_`,
-						},
-						{ quoted: msg }
-					);
+					return await msg.reply(`This group is on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_`);
 				} else if (!isGroup) {
 					let timeLeft = (expiration - now) / 1000;
 					printSpam(isGroup, sender);
-					return await conn.sendMessage(
-						from,
-						{
-							text: `You are on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_`,
-						},
-						{ quoted: msg }
-					);
+					return await msg.reply(`You are on cooldown, please wait another _${timeLeft.toFixed(1)} second(s)_`);
 				}
 			}
 		}
