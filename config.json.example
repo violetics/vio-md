@@ -1,7 +1,7 @@
 {
-	"owner": ["62895333381439@s.whatsapp.net"],
-	"session": "creds.auth.json",
-	"name": "Vio-MD",
+	"owner": ["<your-number>@s.whatsapp.net"],
+	"session": "<session-name>.json",
+	"name": "<bot-name>",
 	"ignore": {
 		"directory": ["umum"]
 	},
