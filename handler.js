@@ -152,7 +152,7 @@ module.exports = handler = async (m, conn, commands) => {
 			await msg.reply(typeof options.wait == "string" ? options.wait : response.wait);
 		}
 		try {
-			await cmd.run({ conn: conn, commands: commands, config: config, command: cmd }, { m: msg, body: q, args: args });
+			await cmd.exec({ ...conn, commands: commands, config: config, command: cmd }, { ...msg, body: q, args: args });
 		} catch (error) {
 			await msg.reply(error);
 		}

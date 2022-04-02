@@ -20,13 +20,13 @@ const readCommands = () => {
 		for (let file of cmds) {
 			let command = require(`${pathDir}/${dir}/${file}`);
 			if (!command) continue;
-			if (typeof command.run != "function") continue;
+			if (typeof command.exec != "function") continue;
 			const cmdOptions = {
 				name: "command",
 				alias: [""],
 				desc: "",
 				use: "",
-				category: typeof command.category == "undefined" ? "" : res.toLowerCase(),
+				category: res.toLowerCase(),
 				wait: false,
 				isOwner: false,
 				isAdmin: false,
@@ -42,7 +42,7 @@ const readCommands = () => {
 				isPrivate: false,
 				isUrl: false,
 				isSpam: false,
-				run: () => {},
+				exec: () => {},
 			};
 			if (command.options && typeof command == "object") command = { ...command, ...command.options };
 			let cmd = utils.parseOptions(cmdOptions, command);
@@ -55,7 +55,7 @@ const readCommands = () => {
 				use: cmd.use,
 				category: cmd.category,
 				options: options,
-				run: cmd.run,
+				exec: cmd.exec,
 			};
 			Collection.set(cmd.name, cmdObject);
 		}
