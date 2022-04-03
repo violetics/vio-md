@@ -1,5 +1,6 @@
 module.exports = {
 	params: ["manga"],
+	wait: true,
 	async exec(conn, msg) {
 		let { text } = msg;
 		const options = {
@@ -7,11 +8,9 @@ module.exports = {
 		};
 		try {
 			const response = await conn.request("/api/anime/samehadaku", options).send();
-			var results = "";
-			for (var data of response.data.result)
-				results += conn.parseResult(data, {
-					title: "Samehadaku",
-				});
+			const results = conn.parseResult(response.data.result, {
+				title: "Samehadaku",
+			});
 			return msg.reply(results.trim());
 		} catch (error) {
 			if (error.response) {

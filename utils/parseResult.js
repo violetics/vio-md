@@ -66,7 +66,6 @@ function parseResult(json, options = {}) {
 		...options,
 	};
 	let { unicode, ignoreKey, title, headers, ignoreVal, body, footer } = opts;
-	let obj = Object.entries(json);
 	if (Array.isArray(json)) {
 		let tmps = [];
 		for (var data of json) {
@@ -75,43 +74,16 @@ function parseResult(json, options = {}) {
 			tmps.push(values.trim());
 		}
 		let text = [headers.replace(/{title}/g, title), tmps.join("\n╰─▣\n\n╭─▣\n").trim(), footer];
-		return text.join("\n").trim();
+		return unicode ? text.join("\n").trim() : tmps;
 	}
+	let obj = Object.entries(json);
 	const tmp = parseEntries(obj, ignoreVal, ignoreKey);
 	if (unicode) {
-		const values = parseTmp(tmp, headers , body);
+		const values = parseTmp(tmp, headers, body);
 		let text = [headers.replace(/{title}/g, title), values.trim(), footer];
 		return text.join("\n").trim();
 	}
 	return tmp;
 }
-
-const data = {
-	status: 200,
-	result: [
-		{
-			title: "Boruto: Naruto Next Generations",
-			url: "https://194.163.183.129/anime/boruto-naruto-next-generations/",
-			thumbnail: "https://i0.wp.com/194.163.183.129/wp-content/uploads/2021/12/poster-boruto.jpg?quality=90&resize=150,210",
-			rate: "5.87",
-			type: "TV",
-			status: "Ongoing",
-			views: "235362 Dilihat",
-			genres: ["Action", "Adventure", "Martial Arts", "pilihan", "Shounen", "Super Power"],
-			description: "Sinopsis anime Boruto: Naruto Next Generations : Setelah suksesnya Perang Dunia Shinobi Keempat, Konohagakure telah menikmati masa damai, kemakmuran,...",
-		},
-		{
-			title: "Naruto: Shippuuden",
-			url: "https://194.163.183.129/anime/naruto-shippuden/",
-			thumbnail: "https://i0.wp.com/194.163.183.129/wp-content/uploads/2020/05/17407.jpg?quality=90&resize=150,210",
-			rate: "8.15",
-			type: "TV",
-			status: "Completed",
-			views: "94467 Dilihat",
-			genres: ["Action", "Adventure", "Comedy", "Martial Arts", "Shounen", "Super Power"],
-			description: "It has been two and a half years since Naruto Uzumaki left Konohagakure, the Hidden Leaf Village, for intense...",
-		},
-	],
-};
 
 module.exports = parseResult;
