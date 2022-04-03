@@ -32,7 +32,7 @@ const readCommands = () => {
 				command.desc ? (command.description = command.desc) : command.description;
 				const cmdOptions = {
 					name: file.split(".js")[0],
-					alias: [""],
+					alias: [],
 					description: "",
 					params: [],
 					wait: false,
