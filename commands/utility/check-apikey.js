@@ -5,7 +5,6 @@ module.exports = {
 	wait: true,
 	async exec(conn, msg) {
 		const apikey = msg.args[0];
-		if (!apikey) return msg.reply("Harap masukkan apikey");
 		try {
 			const response = await conn
 				.request("/api/utility/check-apikey", {

@@ -24,9 +24,10 @@ module.exports = {
 				if (!results.length) {
 					return msg.reply(`'${text}' does not matched any command`);
 				}
+				const sorted = results.sort((a, b) => a.category.localeCompare(b.category));
 				let response = `❲ Similar Commands ❳\n\n`;
 				response += `╭─▣\n`;
-				for (var result of results.sort((a, b) => a.category.localeCompare(b.category))) {
+				for (var result of [...new Map(sorted.map((item) => [item["name"], item])).values()]) {
 					if (config.ignore.category.includes(result.category)) continue;
 					response += `├ ${result.name} ${result.params.join(" ")}\n`;
 				}
