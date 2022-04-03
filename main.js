@@ -18,7 +18,7 @@ const readCommands = () => {
 	let Category = new models.Collections();
 	try {
 		for (var dir of dirs) {
-			const stats = fs.statsSync(`${pathDir}/${dir}`);
+			const stats = fs.statSync(`${pathDir}/${dir}`);
 			if (!stats.isDirectory()) continue;
 			const groups = dir.toLowerCase();
 			Category.set(groups, []);
