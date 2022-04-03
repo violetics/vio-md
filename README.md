@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://violetics.pw/assets/images/logo.png" width="150" height="150" border="0" alt="Vio-MD">
+<img src="https://raw.githubusercontent.com/violetics/vio-md/master/tmp/violetics.png" width="150" height="150" border="0" alt="Vio-MD">
 
 # Vio Multi Device WhatsApp
 

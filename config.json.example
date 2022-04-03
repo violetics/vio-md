@@ -1,9 +1,11 @@
 {
 	"owner": ["<your-number>@s.whatsapp.net"],
+	"apikey": "<your-apikey>",
 	"session": "<session-name>.json",
 	"name": "<bot-name>",
+	"prefix": "!",
 	"ignore": {
-		"directory": ["umum"]
+		"category": ["main"]
 	},
 	"response": {
 		"wait": "_Wait a minute, data is being processed!_",
@@ -11,6 +13,7 @@
 			"url": "Link yang kamu berikan tidak valid",
 			"api": "Maaf terjadi kesalahan"
 		},
+		"self": "Perintah ini khusus owner & bot",
 		"group": "Perintah ini hanya bisa digunakan di grup",
 		"private": "Perintah ini hanya bisa digunakan di private message",
 		"admin": "Perintah ini hanya bisa digunakan oleh Admin Grup",

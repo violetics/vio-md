@@ -1,10 +1,11 @@
 {
 	"owner": ["62895333381439@s.whatsapp.net"],
+	"apikey": "beta",
 	"session": "creds.auth.json",
 	"name": "Vio-MD",
 	"prefix": "!",
 	"ignore": {
-		"directory": ["umum"]
+		"category": ["main", "private"]
 	},
 	"response": {
 		"wait": "_Wait a minute, data is being processed!_",
@@ -12,6 +13,7 @@
 			"url": "Link yang kamu berikan tidak valid",
 			"api": "Maaf terjadi kesalahan"
 		},
+		"self": "Perintah ini khusus owner & bot",
 		"group": "Perintah ini hanya bisa digunakan di grup",
 		"private": "Perintah ini hanya bisa digunakan di private message",
 		"admin": "Perintah ini hanya bisa digunakan oleh Admin Grup",
