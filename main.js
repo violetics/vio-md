@@ -17,7 +17,9 @@ const readCommands = () => {
 	let dirs = fs.readdirSync(pathDir);
 	let Category = new models.Collections();
 	try {
-		dirs.forEach((dir) => {
+		for (var dir of dirs) {
+			const stats = fs.statsSync(`${pathDir}/${dir}`);
+			if (!stats.isDirectory()) continue;
 			const groups = dir.toLowerCase();
 			Category.set(groups, []);
 			const cmds = fs.readdirSync(`${pathDir}/${dir}`).filter((file) => file.endsWith(".js"));
@@ -68,7 +70,7 @@ const readCommands = () => {
 				Commands.set(cmd.name, cmdObject);
 				console.info(color("[SYS]", "blueBright"), `Load ${cmd.name} | /${dir}/${file}`);
 			}
-		});
+		}
 	} catch (error) {
 		console.error(color("[ERR]", "red"), error);
 		process.exit(1);

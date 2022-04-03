@@ -1,7 +1,8 @@
 const { getBinaryNodeChild } = require("@adiwajshing/baileys");
 const { serialize } = require("./lib/serialize");
 const { color, getAdmin } = require("./lib");
-const { isUrl, request } = require("./utils");
+const utils = require("./utils");
+const { isUrl } = utils;
 const cooldown = new Map();
 const config = require("./config.json");
 const owner = config.owner;
@@ -42,7 +43,7 @@ module.exports = handler = async (m, conn, commands) => {
 		const isAdmin = isGroup ? (await getAdmin(conn, msg)).includes(sender) : false;
 		const isPrivate = from.endsWith("@s.whatsapp.net");
 		const botAdmin = isGroup ? (await getAdmin(conn, msg)).includes(conn.decodeJid(conn.user.id)) : false;
-		const isOwner = owner.concat(conn.decodeJid(conn.user.id)).includes(sender);
+		const isOwner = owner.includes(sender);
 
 		const bodyPrefix = body && body.startsWith(config.prefix) ? body : "";
 		const args = bodyPrefix.trim().split(/ +/).slice(1);
@@ -134,14 +135,14 @@ module.exports = handler = async (m, conn, commands) => {
 		if (options.isPrivate && !isPrivate) {
 			return await msg.reply(response.private);
 		}
-		if (options.isUrl && !isUrl(q)) {
+		if (options.isUrl && !isUrl(text)) {
 			return await msg.reply(response.error.url);
 		}
 		if (options.wait) {
 			await msg.reply(typeof options.wait == "string" ? options.wait : response.wait);
 		}
 		try {
-			await cmd.exec({ ...conn, request: request, response: response, commands: commands, config: config, command: cmd }, { ...msg, text: text, args: args });
+			await cmd.exec({ ...conn, ...utils, response: response, commands: commands, config: config, command: cmd }, { ...msg, text: text.trim(), args: args });
 		} catch (error) {
 			await msg.reply(error);
 		}

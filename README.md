@@ -1,7 +1,7 @@
 <div align="center">
 <img src="https://raw.githubusercontent.com/violetics/vio-md/master/tmp/violetics.png" width="150" height="150" border="0" alt="Vio-MD">
 
-# Vio Multi Device WhatsApp
+# Vio Multi Device WhatsApp Bot
 
 ### Use at your own risk!
 
@@ -58,5 +58,4 @@ npm start
 
 -   [`Violetics`](https://violetics.pw/)
 -   [`Faiz Bastomi`](https://github.com/FaizBastomi)
--   [`RzkyFdlh`](https://github.com/Rizky878/rzky-multidevice)
--   [`rzky-multidevice`](https://github.com/Rizky878/rzky-multidevice)
+-   [`RzkyFdlh`](https://github.com/Rizky878)

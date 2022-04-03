@@ -1,0 +1,219 @@
+{
+	"name": "anime",
+	"title": "Anime",
+	"path": "/api/anime",
+	"hostname_path": "https://violetics.pw/api/anime",
+	"total": 21,
+	"stacks": [
+		{
+			"name": "anibatch",
+			"title": "Anibatch",
+			"path": "/api/anime/anibatch",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/anibatch"
+		},
+		{
+			"name": "anikyojin",
+			"title": "Anikyojin",
+			"path": "/api/anime/anikyojin",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/anikyojin"
+		},
+		{
+			"name": "anime-planet",
+			"title": "Anime-Planet",
+			"path": "/api/anime/anime-planet",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/anime-planet"
+		},
+		{
+			"name": "anisearch",
+			"title": "Anisearch",
+			"path": "/api/anime/anisearch",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/anisearch"
+		},
+		{
+			"name": "anoboy",
+			"title": "Anoboy",
+			"path": "/api/anime/anoboy",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/anoboy"
+		},
+		{
+			"name": "fanfox",
+			"title": "Fanfox",
+			"path": "/api/anime/fanfox",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/fanfox"
+		},
+		{
+			"name": "gogoanime",
+			"title": "Gogoanime",
+			"path": "/api/anime/gogoanime",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/gogoanime"
+		},
+		{
+			"name": "jouganime",
+			"title": "Jouganime",
+			"path": "/api/anime/jouganime",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/jouganime"
+		},
+		{
+			"name": "kiryu",
+			"title": "Kiryu",
+			"path": "/api/anime/kiryu",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/kiryu"
+		},
+		{
+			"name": "kissmanga",
+			"title": "Kissmanga",
+			"path": "/api/anime/kissmanga",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/kissmanga"
+		},
+		{
+			"name": "klikmanga",
+			"title": "Klikmanga",
+			"path": "/api/anime/klikmanga",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/klikmanga"
+		},
+		{
+			"name": "komikstation",
+			"title": "Komikstation",
+			"path": "/api/anime/komikstation",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/komikstation"
+		},
+		{
+			"name": "komiku",
+			"title": "Komiku",
+			"path": "/api/anime/komiku",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/komiku"
+		},
+		{
+			"name": "mangadex",
+			"title": "Mangadex",
+			"path": "/api/anime/mangadex",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/mangadex"
+		},
+		{
+			"name": "mangaku",
+			"title": "Mangaku",
+			"path": "/api/anime/mangaku",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/mangaku"
+		},
+		{
+			"name": "manganato",
+			"title": "Manganato",
+			"path": "/api/anime/manganato",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/manganato"
+		},
+		{
+			"name": "myanimelist",
+			"title": "Myanimelist",
+			"path": "/api/anime/myanimelist",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/myanimelist"
+		},
+		{
+			"name": "nekonime",
+			"title": "Nekonime",
+			"path": "/api/anime/nekonime",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/nekonime"
+		},
+		{
+			"name": "nimegami",
+			"title": "Nimegami",
+			"path": "/api/anime/nimegami",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/nimegami"
+		},
+		{
+			"name": "oploverz",
+			"title": "Oploverz",
+			"path": "/api/anime/oploverz",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/oploverz"
+		},
+		{
+			"name": "samehadaku",
+			"title": "Samehadaku",
+			"path": "/api/anime/samehadaku",
+			"methods": ["GET"],
+			"params": {
+				"manga": "naruto"
+			},
+			"hostname_path": "https://violetics.pw/api/anime/samehadaku"
+		}
+	]
+}
