@@ -26,8 +26,7 @@ Fill in everything needed in the config.json file (follow config.json.example).
 ### Requirements
 
 1. [NodeJS](https://nodejs.org/en/download) 16x/17x
-2. [FFMPEG](https://ffmpeg.org)
-3. [libWebP](https://developers.google.com/speed/webp/download)
+2. [APIKEY](https://violetics.pw/)
 
 ### Clone Repository
 
