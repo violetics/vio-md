@@ -24,12 +24,12 @@ class Request {
 		const URL_PATH = this.PATH.startsWith("/api") ? this.BASEURL_PATH.concat(`?apikey=${this.APIKEY}`) : this.BASEURL_PATH;
 		return axios({
 			url: URL_PATH,
+			...this.options,
 			headers: {
 				"X-Request-From": "Vio-MD",
 				"X-Request-Count": REQUEST_COUNT,
 				"User-Agent": "Mozilla/5.0 (Linux; Android 9; Redmi 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Mobile Safari/537.36",
 			},
-			...this.options,
 		});
 	}
 }
