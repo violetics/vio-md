@@ -1,28 +1,29 @@
 const { getBinaryNodeChild } = require("@adiwajshing/baileys");
 const { serialize } = require("./lib/serialize");
-const { color, getAdmin, isUrl } = require("./lib");
+const { color, getAdmin } = require("./lib");
+const { isUrl, request } = require("./utils");
 const cooldown = new Map();
-const prefix = "#";
-const multi_pref = new RegExp("^[" + "!#$%&?/;:,.<>~-+=".replace(/[|\\{}()[\]^$+*?.\-\^]/g, "\\$&") + "]");
 const config = require("./config.json");
 const owner = config.owner;
+
 function printSpam(isGc, sender, groupName) {
 	if (isGc) {
-		return console.log(color("[SPAM]", "red"), color(sender.split("@")[0], "lime"), "in", color(groupName, "lime"));
+		return console.info(color("[SPAM]", "red"), color(sender.split("@")[0], "lime"), "in", color(groupName, "lime"));
 	}
 	if (!isGc) {
-		return console.log(color("[SPAM]", "red"), color(sender.split("@")[0], "lime"));
+		return console.info(color("[SPAM]", "red"), color(sender.split("@")[0], "lime"));
 	}
 }
 
-function printLog(isCmd, sender, groupName, isGc) {
-	if (isCmd && isGc) {
-		return console.log(color("[EXEC]", "aqua"), color(sender, "lime"), "in", color(groupName, "lime"));
+function printLog(sender, groupName, isGc, body, isCmd) {
+	if (!isCmd) {
+		if (isGc) return console.info(color("[MSG]"), color(sender, "lime"), "in", color(groupName, "lime"), color(body, "white"));
+		if (!isGc) return console.info(color("[EXEC]"), color(sender, "lime"), color(body, "white"));
 	}
-	if (isCmd && !isGc) {
-		return console.log(color("[EXEC]", "aqua"), color(sender, "lime"));
-	}
+	if (isGc) return console.info(color("[EXEC]"), color(sender, "lime"), "in", color(groupName, "lime"), color(body, "white"));
+	if (!isGc) return console.info(color("[EXEC]"), color(sender, "lime"), color(body, "white"));
 }
+
 module.exports = handler = async (m, conn, commands) => {
 	try {
 		if (m.type !== "notify") return;
@@ -39,18 +40,13 @@ module.exports = handler = async (m, conn, commands) => {
 		const groupMetadata = isGroup ? await conn.groupMetadata(from) : "";
 		const groupName = isGroup ? groupMetadata.subject : "";
 		const isAdmin = isGroup ? (await getAdmin(conn, msg)).includes(sender) : false;
-		const isPrivate = msg.from.endsWith("@s.whatsapp.net");
+		const isPrivate = from.endsWith("@s.whatsapp.net");
 		const botAdmin = isGroup ? (await getAdmin(conn, msg)).includes(conn.decodeJid(conn.user.id)) : false;
-		const isOwner = owner.includes(sender);
+		const isOwner = owner.concat(conn.decodeJid(conn.user.id)).includes(sender);
 
-		let temp_pref = multi_pref.test(body) ? body.split("").shift() : "#";
-		body = body ? (body.startsWith(temp_pref) ? body : "") : "";
-
-		const arg = body.substring(body.indexOf(" ") + 1);
-		const args = body.trim().split(/ +/).slice(1);
-		const comand = body.trim().split(/ +/)[0];
-		const q = args.join(" ");
-		const isCmd = body.startsWith(temp_pref);
+		const bodyPrefix = body && body.startsWith(config.prefix) ? body : "";
+		const args = bodyPrefix.trim().split(/ +/).slice(1);
+		const text = args.join(" ");
 
 		//type message
 		const isVideo = type === "videoMessage";
@@ -65,12 +61,11 @@ module.exports = handler = async (m, conn, commands) => {
 		const isQSticker = type === "extendedTextMessage" && contentQ.includes("stickerMessage");
 		const isQLocation = type === "extendedTextMessage" && contentQ.includes("locationMessage");
 
-		// Log
-		printLog(isCmd, sender, groupName, isGroup);
-
-		const cmdName = body.slice(temp_pref.length).trim().split(/ +/).shift().toLowerCase();
-		const cmd = commands.get(cmdName) || [...commands.values()].find((x) => x.alias.find((x) => x.toLowerCase() == cmdName));
+		const cmdName = bodyPrefix.slice(config.prefix.length).trim().split(/ +/).shift().toLowerCase();
+		const cmd = commands.get(cmdName) || [...commands.values()].find((x) => x.alias.find((x) => x.toLowerCase() == cmdName.toLowerCase()));
+		cmd ? printLog(sender, groupName, isGroup, body, true) : printLog(sender, groupName, isGroup, bodyPrefix, false);
 		if (!cmd) return;
+
 		if (!cooldown.has(from)) {
 			cooldown.set(from, new Map());
 		}
@@ -92,71 +87,65 @@ module.exports = handler = async (m, conn, commands) => {
 			}
 		}
 		setTimeout(() => timestamps.delete(from), cdAmount);
+		const response = config.response;
 		const options = cmd.options;
-		if (options.isSpam) {
+		if (options.isSpam && !isOwner) {
 			timestamps.set(from, now);
 		}
-		if (options.isAdmin && !isAdmin) {
-			await msg.reply(response.GroupAdmin);
-			return true;
+		if (options.isSelf && conn.decodeJid(conn.user.id) != sender && !isOwner) {
+			return await msg.reply(response.self);
 		}
-		if (options.isQuoted && !msg.quoted) {
-			await msg.reply(`Silahkan reply pesan`);
-			return true;
-		}
-		if (options.isQVideo && !isQVideo) {
-			await msg.reply(`Silahkan reply video`);
-			return true;
-		}
-		if (options.isQAudio && !isQAudio) {
-			await msg.reply(`Silahkan reply audio`);
-			return true;
-		}
-		if (options.isQSticker && !isQSticker) {
-			await msg.reply(`Silahkan reply sticker`);
-			return true;
-		}
-		if (options.isQImage && !isQImage) {
-			await msg.reply(`Silahkan reply foto`);
-			return true;
-		}
-		if (options.isQDocument && !isQDocument) {
-			await msg.reply(`Silahkan reply document`);
-			return true;
+		if (!options.isSelf && conn.decodeJid(conn.user.id) == sender) {
+			return;
 		}
 		if (options.isOwner && !isOwner) {
-			await msg.reply(response.OnlyOwner);
-			return true;
+			return await msg.reply(response.owner);
+		}
+		if (options.isAdmin && !isAdmin) {
+			return await msg.reply(response.admin);
+		}
+		if (options.isQuoted && !msg.quoted) {
+			return await msg.reply(`Silahkan reply pesan`);
+		}
+		if (options.isQVideo && !isQVideo) {
+			return await msg.reply(`Silahkan reply video`);
+		}
+		if (options.isQAudio && !isQAudio) {
+			return await msg.reply(`Silahkan reply audio`);
+		}
+		if (options.isQSticker && !isQSticker) {
+			return await msg.reply(`Silahkan reply sticker`);
+		}
+		if (options.isQImage && !isQImage) {
+			return await msg.reply(`Silahkan reply foto`);
+		}
+		if (options.isQDocument && !isQDocument) {
+			return await msg.reply(`Silahkan reply document`);
 		}
 		if (options.isGroup && !isGroup) {
-			await msg.reply(response.OnlyGrup);
-			return true;
+			return await msg.reply(response.group);
 		}
 		if (options.isBotAdmin && !botAdmin) {
-			await msg.reply(response.BotAdmin);
-			return true;
+			return await msg.reply(response.botAdmin);
 		}
-		if (options.query && !q) {
-			await msg.reply(options.query == "true" ? `Masukan query` : options.query);
-			return true;
+		if (options.params.length > 0 && !text) {
+			return await msg.reply(`Masukkan parameter ${options.params.join(" ")}`);
 		}
 		if (options.isPrivate && !isPrivate) {
-			await msg.reply(response.OnlyPM);
-			return true;
+			return await msg.reply(response.private);
 		}
-		if (options.isUrl && !isUrl(q ? q : "p")) {
-			await msg.reply(response.error.Iv);
-			return true;
+		if (options.isUrl && !isUrl(q)) {
+			return await msg.reply(response.error.url);
 		}
 		if (options.wait) {
 			await msg.reply(typeof options.wait == "string" ? options.wait : response.wait);
 		}
 		try {
-			await cmd.exec({ ...conn, commands: commands, config: config, command: cmd }, { ...msg, body: q, args: args });
+			await cmd.exec({ ...conn, request: request, response: response, commands: commands, config: config, command: cmd }, { ...msg, text: text, args: args });
 		} catch (error) {
 			await msg.reply(error);
 		}
 	} catch (error) {
-		console.log(color("Error", "red"), error.stack);
+		console.error(color("[ERR]", "red"), error.stack);
 	}
 };

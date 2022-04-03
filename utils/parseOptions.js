@@ -5,10 +5,10 @@ function or() {
 	return arguments[arguments.length - 1];
 }
 
-module.exports = function parseOptions(optionsArgs = {}, args = {}) {
+module.exports = function parseOptions(defaultArgs = {}, args = {}) {
 	let options = {};
-	let entries = Object.entries(optionsArgs);
-	for (let i = 0; i < Object.keys(optionsArgs).length; i++) {
+	let entries = Object.entries(defaultArgs);
+	for (let i = 0; i < Object.keys(defaultArgs).length; i++) {
 		let [key, val] = entries[i];
 		options[key] = or(args[key], val);
 	}
