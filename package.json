@@ -32,12 +32,10 @@
 		"bluebird": "^3.7.2",
 		"chalk": "^4.1.2",
 		"file-type": "^16.5.3",
-		"fluent-ffmpeg": "^2.1.2",
 		"node-fetch": "^2.6.1"
 	},
 	"devDependencies": {
 		"@hapi/boom": "^9.1.4",
-		"jimp": "^0.16.1",
 		"pino": "^7.9.2",
 		"prettier": "^2.6.1",
 		"qrcode-terminal": "^0.12.0"
