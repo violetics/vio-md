@@ -43,7 +43,7 @@ module.exports = handler = async (m, conn, commands) => {
 		const isAdmin = isGroup ? (await getAdmin(conn, msg)).includes(sender) : false;
 		const isPrivate = from.endsWith("@s.whatsapp.net");
 		const botAdmin = isGroup ? (await getAdmin(conn, msg)).includes(conn.decodeJid(conn.user.id)) : false;
-		const isOwner = owner.includes(sender);
+		const isOwner = owner.concat(conn.decodeJid(conn.user.id)).includes(sender);
 
 		const bodyPrefix = body && body.startsWith(config.prefix) ? body : "";
 		const args = bodyPrefix.trim().split(/ +/).slice(1);
