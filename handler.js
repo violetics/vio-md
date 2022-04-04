@@ -129,7 +129,7 @@ module.exports = handler = async (m, conn, commands) => {
 		if (options.isBotAdmin && !botAdmin) {
 			return await msg.reply(response.botAdmin);
 		}
-		if (options.params.length != args.length) {
+		if (!!options.params.length && !text) {
 			return await msg.reply(`Masukkan parameter ${options.params.join(" ")}`);
 		}
 		if (options.isPrivate && !isPrivate) {

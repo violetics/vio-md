@@ -3,6 +3,7 @@ module.exports = {
 	parseResponse: require("./parseResponse"),
 	parseResult: require("./parseResult"),
 	isUrl: require("./isUrl"),
-	toTitleCase: require("./toTitleCase"),
 	request: require("./request"),
+	toTitleCase: require("./toTitleCase"),
+	shuffle: require("./shuffle"),
 };
