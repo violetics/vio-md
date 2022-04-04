@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 module.exports = {
     description: "Used to searching anime/manga",
 	params: ["manga"],
@@ -12,7 +14,11 @@ module.exports = {
 			const results = conn.parseResult(response.data.result, {
 				title: "Anikyojin",
 			});
-			return msg.reply(results.trim());
+			return await conn.sendMessage(msg.from, {
+			    image: { url: conn.shuffle(response.data.result).thumbnail },
+			    caption: results.trim(),
+			    jpegThumbnail: fs.readFileSync("./tmp/violetics.png"),
+			});
 		} catch (error) {
 			if (error.response) {
 				if (error.response.hasOwnProperty("data")) {
