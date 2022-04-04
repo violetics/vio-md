@@ -9,7 +9,7 @@ module.exports = {
 	exec: function exec(conn, msg) {
 		cp.exec(msg.text, (error, stdout) => {
 			if (error) return msg.reply(error);
-			return msg.reply(stdout.toString());
+			return msg.reply(stdout.toString().trim());
 		});
 	},
 };
