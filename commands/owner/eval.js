@@ -1,6 +1,6 @@
 module.exports = {
 	name: "eval",
-	alias: [">>", "ev"],
+	alias: ["ev"],
 	desc: "running javascript code via command can also test something code",
 	params: ["code"],
 	options: {

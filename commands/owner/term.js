@@ -7,7 +7,9 @@ module.exports = {
 	isOwner: true,
 	isSelf: true,
 	exec: function exec(conn, msg) {
-		const execSync = cp.execSync(msg.text);
-		return conn.reply(execSync.toString("utf-8"));
+		cp.exec(msg.text, (error, stdout) => {
+		    if (error) return msg.reply(error);
+		    return msg.reply(stdout.toString());
+		});
 	},
 };

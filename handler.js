@@ -93,10 +93,10 @@ module.exports = handler = async (m, conn, commands) => {
 		if (options.isSpam && !isOwner) {
 			timestamps.set(from, now);
 		}
-		if (options.isSelf && conn.decodeJid(conn.user.id) != sender && !isOwner) {
+		if (options.isSelf && !msg.isSelf && !isOwner) {
 			return await msg.reply(response.self);
 		}
-		if (!options.isSelf && conn.decodeJid(conn.user.id) == sender) {
+		if (!options.isSelf && msg.isSelf) {
 			return;
 		}
 		if (options.isOwner && !isOwner) {

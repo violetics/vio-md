@@ -143,4 +143,5 @@ connect();
 
 process.on("uncaughtException", function (error) {
 	console.error(color("[ERR]", "red"), error.stack);
+	connect();
 });
