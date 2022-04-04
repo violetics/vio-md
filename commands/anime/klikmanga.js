@@ -1,4 +1,5 @@
 module.exports = {
+    description: "Used to searching anime/manga",
 	params: ["manga"],
 	wait: true,
 	async exec(conn, msg) {
