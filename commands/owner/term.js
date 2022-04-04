@@ -8,8 +8,8 @@ module.exports = {
 	isSelf: true,
 	exec: function exec(conn, msg) {
 		cp.exec(msg.text, (error, stdout) => {
-		    if (error) return msg.reply(error);
-		    return msg.reply(stdout.toString());
+			if (error) return msg.reply(error);
+			return msg.reply(stdout.toString());
 		});
 	},
 };

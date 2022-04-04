@@ -25,6 +25,9 @@ function parseEntries(obj, ignoreVal, ignoreKey) {
 					]);
 				}
 				break;
+			case "function":
+			    tmp.push([key, util.format(val)]);
+			    break;
 			default:
 				tmp.push([key, val]);
 				break;
@@ -68,6 +71,11 @@ function parseResult(json, options = {}) {
 	let { unicode, ignoreKey, title, headers, ignoreVal, body, footer } = opts;
 	if (Array.isArray(json)) {
 		let tmps = [];
+		if (!!json.filter((el) => typeof el != "object").length) {
+			tmps.push(body.replace(/{key}: /g, "").replace(/{value}/g, json.join("\n├ ")));
+			let text = [headers.replace(/{title}/g, title), tmps.join("\n╰─▣\n\n╭─▣\n").trim(), footer];
+			return unicode ? text.join("\n").trim() : tmps;
+		}
 		for (var data of json) {
 			let tmp = parseEntries(Object.entries(data), ignoreVal, ignoreKey);
 			const values = parseTmp(tmp, headers, body);
