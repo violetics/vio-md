@@ -26,8 +26,8 @@ function parseEntries(obj, ignoreVal, ignoreKey) {
 				}
 				break;
 			case "function":
-			    tmp.push([key, util.format(val)]);
-			    break;
+				tmp.push([key, util.format(val)]);
+				break;
 			default:
 				tmp.push([key, val]);
 				break;
