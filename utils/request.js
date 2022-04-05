@@ -18,7 +18,7 @@ class Request {
 	send(options = {}) {
 		let REQUEST_COUNT = 1;
 		this.options = Object.assign(this.options, options);
-		const APIKEY = (this.options && this.options.params && this.options.params.apikey) ? this.options.params.apikey : this.APIKEY;
+		const APIKEY = this.options && this.options.params && this.options.params.apikey ? this.options.params.apikey : this.APIKEY;
 		if (this.cache.has(this.BASEURL_PATH)) REQUEST_COUNT = REQUEST_COUNT + this.cache.get(this.BASEURL_PATH);
 		this.cache.set(this.BASEURL_PATH, REQUEST_COUNT);
 		this.cache.REQUEST_COUNT = REQUEST_COUNT;
