@@ -23,7 +23,7 @@
 
 Rename config.json.example to config.json or create new file called config.json.
 Fill in everything needed in the config.json file (follow config.json.example).
-*Recommendation to install Heroku CLI to scan QR Code & Development your bot using HerokuApp*
+_Recommendation to install Heroku CLI to scan QR Code & Development your bot using HerokuApp_
 
 ### Requirements
 
