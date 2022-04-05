@@ -22,7 +22,7 @@ module.exports = {
 						results.push(commands.get(cmd.name));
 					});
 				if (!results.length) {
-					return msg.reply(`'${text}' does not matched any command`);
+					return msg.adReply(`'${text}' does not matched any command`);
 				}
 				const sorted = results.sort((a, b) => a.category.localeCompare(b.category));
 				let response = `❲ Similar Commands ❳\n\n`;
@@ -33,10 +33,10 @@ module.exports = {
 				}
 				response += `╰─▣\n\n`;
 				response += `©${new Date().getFullYear()} ${config.name}`;
-				return msg.reply(response.trim());
+				return msg.adReply(response.trim());
 			}
 			if (config.ignore.category.includes(cmd.category)) {
-				return msg.reply(`'${text}' does not matched any command`);
+				return msg.adReply(`'${text}' does not matched any command`);
 			}
 			let response = "❲ Detail Command ❳\n\n";
 			response += `╭─▣\n`;
@@ -47,7 +47,7 @@ module.exports = {
 			response += `├ Usage: ${prefix}${cmd.name} ${cmd.params.join(" ")}\n`;
 			response += `╰─▣\n\n`;
 			response += "Note: [] = optional, | = or, <> = required, & = multiple queries";
-			return await msg.reply(response.trim());
+			return await msg.adReply(response.trim());
 		}
 		const sections = [];
 		const keys = [...Category.keys()];
@@ -60,7 +60,7 @@ module.exports = {
 			};
 			for (var ctg of category) {
 				section.rows.push({
-					title: `▣ ${ctg.name} ${ctg.params.join(" ")}`,
+					title: `${prefix + ctg.name} ${ctg.params.join(" ")}`,
 					rowId: prefix + ctg.name,
 					description: ctg.description,
 				});

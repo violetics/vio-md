@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 module.exports = {
-    description: "Used to searching anime/manga",
+	description: "Used to searching anime/manga",
 	params: ["manga"],
 	wait: true,
 	async exec(conn, msg) {
@@ -14,11 +14,7 @@ module.exports = {
 			const results = conn.parseResult(response.data.result, {
 				title: "Anibatch",
 			});
-			return await conn.sendMessage(msg.from, {
-			    image: { url: conn.shuffle(response.data.result).thumbnail },
-			    caption: results.trim(),
-			    jpegThumbnail: fs.readFileSync("./tmp/violetics.png"),
-			});
+			return msg.sendImage(response.data.result.shuffle().thumbnail, results.trim());
 		} catch (error) {
 			if (error.response) {
 				if (error.response.hasOwnProperty("data")) {
