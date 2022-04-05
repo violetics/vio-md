@@ -2,6 +2,7 @@ module.exports = {
 	name: "checkkey",
 	alias: ["cekkey", "cekapi", "cekapikey"],
 	params: ["apikey"],
+	description: "Mengecek status APIKEY kamu di https://violetics.pw/",
 	wait: true,
 	async exec(conn, msg) {
 		const apikey = msg.args[0];
