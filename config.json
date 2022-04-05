@@ -1,9 +1,10 @@
 {
-	"owner": ["62895333381439@s.whatsapp.net"],
+	"ownerNumber": ["62895333381439@s.whatsapp.net"],
 	"apikey": "beta",
 	"session": "creds.auth.json",
 	"name": "Vio-MD",
-	"prefix": "!",
+	"prefix": ".",
+	"BASEURL": "https://violetics.pw",
 	"ignore": {
 		"category": ["main", "private"]
 	},

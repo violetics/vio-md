@@ -1,29 +1,10 @@
 const { getBinaryNodeChild } = require("@adiwajshing/baileys");
-const { serialize } = require("./lib/serialize");
-const { color, getAdmin } = require("./lib");
 const utils = require("./utils");
+const { serialize, log, getAdmin } = require("./lib");
 const { isUrl } = utils;
 const cooldown = new Map();
 const config = require("./config.json");
-const owner = config.owner;
-
-function printSpam(isGc, sender, groupName) {
-	if (isGc) {
-		return console.info(color("[SPAM]", "red"), color(sender.split("@")[0], "lime"), "in", color(groupName, "lime"));
-	}
-	if (!isGc) {
-		return console.info(color("[SPAM]", "red"), color(sender.split("@")[0], "lime"));
-	}
-}
-
-function printLog(sender, groupName, isGc, body, isCmd) {
-	if (!isCmd) {
-		if (isGc) return console.info(color("[MSG]"), color(sender, "lime"), "in", color(groupName, "lime"), color(body, "white"));
-		if (!isGc) return console.info(color("[EXEC]"), color(sender, "lime"), color(body, "white"));
-	}
-	if (isGc) return console.info(color("[EXEC]"), color(sender, "lime"), "in", color(groupName, "lime"), color(body, "white"));
-	if (!isGc) return console.info(color("[EXEC]"), color(sender, "lime"), color(body, "white"));
-}
+const { ownerNumber } = config;
 
 module.exports = handler = async (m, conn, commands) => {
 	try {
@@ -43,7 +24,7 @@ module.exports = handler = async (m, conn, commands) => {
 		const isAdmin = isGroup ? (await getAdmin(conn, msg)).includes(sender) : false;
 		const isPrivate = from.endsWith("@s.whatsapp.net");
 		const botAdmin = isGroup ? (await getAdmin(conn, msg)).includes(conn.decodeJid(conn.user.id)) : false;
-		const isOwner = owner.concat(conn.decodeJid(conn.user.id)).includes(sender);
+		const isOwner = ownerNumber.concat(conn.decodeJid(conn.user.id)).includes(sender);
 
 		const bodyPrefix = body && body.startsWith(config.prefix) ? body : "";
 		const args = bodyPrefix.trim().split(/ +/).slice(1);
@@ -64,7 +45,9 @@ module.exports = handler = async (m, conn, commands) => {
 
 		const cmdName = bodyPrefix.slice(config.prefix.length).trim().split(/ +/).shift().toLowerCase();
 		const cmd = commands.get(cmdName) || [...commands.values()].find((x) => x.alias.find((x) => x.toLowerCase() == cmdName.toLowerCase()));
-		cmd ? printLog(sender, groupName, isGroup, body, true) : printLog(sender, groupName, isGroup, bodyPrefix, false);
+		cmd
+			? log.info({ redBright: "[CMD]", blueBright: sender, ...(isGroup ? { cyan: "in " + groupName } : {}), white: bodyPrefix })
+			: log.info({ redBright: "[MSG]", blueBright: sender, ...(isGroup ? { cyan: "in " + groupName } : {}), white: body });
 		if (!cmd) return;
 
 		if (!cooldown.has(from)) {
@@ -144,9 +127,10 @@ module.exports = handler = async (m, conn, commands) => {
 		try {
 			await cmd.exec({ ...conn, ...utils, response: response, commands: commands, config: config, command: cmd }, { ...msg, text: text.trim(), args: args });
 		} catch (error) {
+			log.error(error);
 			await msg.reply(error);
 		}
 	} catch (error) {
-		console.error(color("[ERR]", "red"), error.stack);
+		log.error(error);
 	}
 };

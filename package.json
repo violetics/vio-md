@@ -2,13 +2,13 @@
 	"name": "vio-md",
 	"version": "1.0.0",
 	"description": "Vio-MD is multi-device whatsapp bot using library @adiwajshing/baileys and example bot of Violetics API",
-	"main": "main.js",
+	"main": "index.js",
 	"directories": {
 		"lib": "lib"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node main.js",
+		"start": "node index.js",
 		"prettier": "prettier -w ."
 	},
 	"repository": {
@@ -31,7 +31,8 @@
 		"axios": "^0.26.1",
 		"chalk": "^4.1.2",
 		"file-type": "^16.5.3",
-		"node-fetch": "^2.6.1"
+		"node-fetch": "^2.6.1",
+		"spinnies": "^0.5.1"
 	},
 	"devDependencies": {
 		"@hapi/boom": "^9.1.4",

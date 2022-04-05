@@ -3,7 +3,8 @@
 	"apikey": "<your-apikey>",
 	"session": "<session-name>.json",
 	"name": "<bot-name>",
-	"prefix": "!",
+	"prefix": "<prefix>",
+	"BASEURL": "https://violetics.pw",
 	"ignore": {
 		"category": ["main"]
 	},

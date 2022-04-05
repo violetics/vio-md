@@ -17,11 +17,13 @@
 -   [√] Easy to maintenance
 -   [√] Support Multi-Device Connection
 -   [√] Simple & Lightweight
+-   [√] Rich Features
 
 ### Installation
 
 Rename config.json.example to config.json or create new file called config.json.
 Fill in everything needed in the config.json file (follow config.json.example).
+*Recommendation to install Heroku CLI to scan QR Code & Development your bot using HerokuApp*
 
 ### Requirements
 

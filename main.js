@@ -1,18 +1,18 @@
-const { fetchLatestBaileysVersion, default: Baileys, useSingleFileAuthState, DisconnectReason } = require("@adiwajshing/baileys");
+const { fetchLatestBaileysVersion, default: WASocket, useSingleFileAuthState, DisconnectReason, delay } = require("@adiwajshing/baileys");
 const fs = require("fs");
-const log = require("pino");
+const Pino = require("pino");
 const path = require("path");
 const utils = require("./utils");
 const models = require("./models");
 const handler = require("./handler");
-const { color } = require("./lib");
+const { log } = require("./lib");
 const { Boom } = require("@hapi/boom");
 const { prefix, session } = require("./config.json");
-const { state, saveState } = useSingleFileAuthState(path.join(__dirname, `./${session}`), log({ level: "silent" }));
+const { state, saveState } = useSingleFileAuthState(path.join(__dirname, `./${session}`), Pino({ level: "silent" }));
 const Commands = new models.Collections();
 Commands.prefix = prefix;
 
-const readCommands = () => {
+const readCommands = async () => {
 	let pathDir = path.join(__dirname, "/commands");
 	let dirs = fs.readdirSync(pathDir);
 	let Category = new models.Collections();
@@ -68,11 +68,12 @@ const readCommands = () => {
 				};
 				Category.get(groups).push(cmdObject);
 				Commands.set(cmd.name, cmdObject);
-				console.info(color("[SYS]", "blueBright"), `Load ${cmd.name} | /${dir}/${file}`);
+				await delay(100);
+				log.animate(`Load ${cmd.name} | /${dir}/${file}`);
 			}
 		}
 	} catch (error) {
-		console.error(color("[ERR]", "red"), error);
+		log.error(error);
 		process.exit(1);
 	}
 	Commands.Category = Category;
@@ -84,18 +85,17 @@ const readCommands = () => {
 	Commands.toString = function (replacer = 4) {
 		return JSON.stringify(serialize, null, replacer);
 	};
-	console.info(color("[SYS]", "blueBright"), "Commands loaded!");
 };
-// cmd
-readCommands();
 
 const connect = async () => {
+	await readCommands();
+	log.animate("Succesfully loaded all commands", "succeed");
 	let { version, isLatest } = await fetchLatestBaileysVersion();
-	console.info(`Using: ${version}, newer: ${isLatest}`);
-	const conn = Baileys({
+	log.info(`Using: ${version}, newer: ${isLatest}`);
+	const conn = WASocket({
 		printQRInTerminal: true,
 		auth: state,
-		logger: log({ level: "silent" }),
+		logger: Pino({ level: "silent" }),
 		version: version,
 	});
 
@@ -103,31 +103,31 @@ const connect = async () => {
 	conn.ev.on("connection.update", async (up) => {
 		const { lastDisconnect, connection } = up;
 		if (connection) {
-			console.info("Connection Status: ", connection);
+			log.info("Connection Status: " + connection);
 		}
 
 		if (connection === "close") {
 			let reason = new Boom(lastDisconnect.error).output.statusCode;
 			if (reason === DisconnectReason.badSession) {
-				console.info(`Bad Session File, Please Delete ${session} and Scan Again`);
+				log.info(`Bad Session File, Please Delete ${session} and Scan Again`);
 				conn.logout();
 			} else if (reason === DisconnectReason.connectionClosed) {
-				console.info("Connection closed, reconnecting....");
+				log.info("Connection closed, reconnecting....");
 				connect();
 			} else if (reason === DisconnectReason.connectionLost) {
-				console.info("Connection Lost from Server, reconnecting...");
+				log.info("Connection Lost from Server, reconnecting...");
 				connect();
 			} else if (reason === DisconnectReason.connectionReplaced) {
-				console.info("Connection Replaced, Another New Session Opened, Please Close Current Session First");
+				log.info("Connection Replaced, Another New Session Opened, Please Close Current Session First");
 				conn.logout();
 			} else if (reason === DisconnectReason.loggedOut) {
-				console.info(`Device Logged Out, Please Delete ${session} and Scan Again.`);
+				log.info(`Device Logged Out, Please Delete ${session} and Scan Again.`);
 				conn.logout();
 			} else if (reason === DisconnectReason.restartRequired) {
-				console.info("Restart Required, Restarting...");
+				log.info("Restart Required, Restarting...");
 				connect();
 			} else if (reason === DisconnectReason.timedOut) {
-				console.info("Connection TimedOut, Reconnecting...");
+				log.info("Connection TimedOut, Reconnecting...");
 				connect();
 			} else {
 				conn.end(`Unknown DisconnectReason: ${reason}|${lastDisconnect.error}`);
@@ -142,5 +142,5 @@ const connect = async () => {
 connect();
 
 process.on("uncaughtException", function (error) {
-	console.error(color("[ERR]", "red"), error.stack);
+	log.error(error);
 });
