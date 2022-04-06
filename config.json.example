@@ -5,21 +5,22 @@
 	"name": "<bot-name>",
 	"prefix": "<prefix>",
 	"BASEURL": "https://violetics.pw",
+	"options": {
+		"multiPrefix": true,
+		"autoRead": true,
+		"noPrefix": false,
+		"mute": false
+	},
 	"ignore": {
-		"category": ["main"]
+		"category": ["main", "private"]
 	},
 	"response": {
 		"wait": "_Wait a minute, data is being processed!_",
-		"error": {
-			"url": "Link yang kamu berikan tidak valid",
-			"api": "Maaf terjadi kesalahan"
-		},
-		"self": "Perintah ini khusus owner & bot",
-		"group": "Perintah ini hanya bisa digunakan di grup",
-		"private": "Perintah ini hanya bisa digunakan di private message",
-		"admin": "Perintah ini hanya bisa digunakan oleh Admin Grup",
-		"botAdmin": "Bot Harus menjadi admin",
-		"owner": "Perintah ini hanya dapat digunakan oleh owner bot",
-		"premium": "Perintah ini khusus member premium"
+		"isUrl": "Link yang kamu berikan tidak valid",
+		"isSelf": "Perintah ini khusus owner & bot",
+		"isGroup": "Perintah ini hanya bisa digunakan di grup",
+		"isPrivate": "Perintah ini hanya bisa digunakan di private message",
+		"isAdmin": "Perintah ini hanya bisa digunakan oleh Admin Grup",
+		"isOwner": "Perintah ini hanya dapat digunakan oleh owner bot"
 	}
 }
