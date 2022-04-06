@@ -10,9 +10,9 @@ module.exports = {
 			params: { manga: text },
 		};
 		try {
-			const response = await conn.request("/api/anime/anibatch", options).send();
+			const response = await conn.request("/api/anime/gogoanime", options).send();
 			const results = conn.parseResult(response.data.result, {
-				title: "Anibatch",
+				title: "Gogoanime",
 			});
 			return msg.sendImage(response.data.result.shuffle().thumbnail, results.trim());
 		} catch (error) {
