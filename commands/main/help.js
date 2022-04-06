@@ -9,25 +9,16 @@ module.exports = {
 		if (text) {
 			let cmd = commands.get(args[0]) || Array.from(commands.values()).find((x) => x.alias.includes(args[0]));
 			if (!cmd || (cmd && cmd.category == "private")) {
-				const results = [];
-				const _cmds = [...commands.keys()].concat(...[...commands.values()].map((x) => [x.category, ...x.alias])).filter(Boolean);
-				_cmds
-					.filter((_cmds) => _cmds.toLowerCase().includes(text.toLowerCase().trim()))
-					.forEach((_cmd) => {
-						const cmd = Array.from(commands.values()).find((x) => {
-							let filter = [x.name, x.category, ...x.alias].filter(Boolean);
-							if (filter.includes(_cmd)) return x;
-						});
-						if (!cmd) return results;
-						results.push(commands.get(cmd.name));
-					});
-				if (!results.length) {
-					return msg.adReply(`'${text}' does not matched any command`);
-				}
+				const _cmds = Array.from(commands.values()).filter(Boolean);
+				let results = _cmds.filter((_cmds) => [_cmds.name, ..._cmds.alias].find((x) => x.toLowerCase().includes(text.toLowerCase())));
+				if (!results.length) results = _cmds.filter((_cmds) => _cmds.category.toLowerCase().includes(text.toLowerCase()));
+				if (!results.length) return msg.adReply(`'${text}' does not matched any command`);
 				const sorted = results.sort((a, b) => a.category.localeCompare(b.category));
+				const filterCmds = [...new Map(sorted.map((item) => [item["name"], item])).values()];
+				if (filterCmds.find((x) => config.ignore.category.includes(x.category))) return msg.adReply(`'${text}' does not matched any command`);
 				let response = `❲ Similar Commands ❳\n\n`;
 				response += `╭─▣\n`;
-				for (var result of [...new Map(sorted.map((item) => [item["name"], item])).values()]) {
+				for (var result of filterCmds) {
 					if (config.ignore.category.includes(result.category)) continue;
 					response += `├ ${result.name} ${result.params.join(" ")}\n`;
 				}
