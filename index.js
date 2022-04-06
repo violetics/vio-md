@@ -1,5 +1,5 @@
 let { spawn } = require("child_process");
-let log = require("./lib/log");
+let { log } = require("./lib");
 let path = require("path");
 let fs = require("fs");
 var isRunning = false;
@@ -46,4 +46,4 @@ function start(file) {
 	});
 }
 
-start("main.js");
+start("./lib/connect.js");
