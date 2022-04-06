@@ -1,17 +1,26 @@
+const { response } = require("../config");
+
 module.exports = function (conn, msg, RESPONSE_DATA = {}) {
 	const { options, key, text } = RESPONSE_DATA;
 	const RESPONSE_TYPE = typeof options[key];
-	let responseMessage;
+	console.log(options[key], RESPONSE_TYPE);
 	switch (RESPONSE_TYPE) {
 		case "function":
-			responseMessage = options[key](conn, msg);
+			{
+				console.log(options[key] + "");
+				return options[key](conn, msg);
+			}
 			break;
 		case "string":
-			responseMessage = options[key];
+			{
+				return msg.adReply(options[key]);
+			}
 			break;
 		default:
-			responseMessage = conn.config[key] ? conn.config[key] : text;
+			{
+				const responseMessage = response[key] ? response[key] : text;
+				return msg.adReply(responseMessage);
+			}
 			break;
 	}
-	return responseMessage.trim();
 };
